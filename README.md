@@ -27,4 +27,5 @@
 Open Termux and run the following command:
 
 ```sh
-curl -sS [https://raw.githubusercontent.com/rittik55/ritiktool/main/install.sh](https://
+curl -sS https://raw.githubusercontent.com/rittik55/ritiktool/main/install.sh | bash
+

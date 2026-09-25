@@ -1,18 +1,32 @@
-# RittikTool
+div align="center">
 
-Fastboot & Hybrid ROM Flasher for Xiaomi devices (no PC needed, works from another phone via Termux).
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 100" width="280">
+    <rect width="340" height="100" rx="20" fill="#FF6900"/>
+    <rect x="25" y="20" width="60" height="60" rx="14" fill="#FFFFFF"/>
+    <path fill="#FF6900" d="M43 38 h7 v16 h14 v-16 h7 v24 h-7 v-10 h-7 v10 h-14 z"/>
+    <text x="110" y="66" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="34" font-weight="600" fill="#FFFFFF">RittikTool</text>
+  </svg>
 
-<p>
-  <img src="https://img.shields.io/badge/Platform-Termux%20%7C%20Android-green?style=flat-square" alt="Platform">
-  <img src="https://img.shields.io/badge/Architecture-ARM64%20%7C%20ARM-blue?style=flat-square" alt="Architecture">
-  <img src="https://img.shields.io/badge/Version-1.6.0-orange?style=flat-square" alt="Version">
-  <img src="https://img.shields.io/badge/License-Apache--2.0-red?style=flat-square" alt="License">
-</p>
+  <br><br>
+  Fastboot & Hybrid ROM Flasher for Xiaomi devices (no PC needed, works from another phone via Termux).
+  <br><br>
 
----
+  [![Version](https://img.shields.io/badge/Version-v1.6.0-brightgreen?style=flat-square&labelColor=black)](https://github.com/rittik55/ritiktool)
+  [![License](https://img.shields.io/badge/License-Apache_2.0-blue?style=flat-square&labelColor=555555)](./LICENSE)
+  
+  ___
 
-On Termux (without root) you'll need the [Termux:API](https://github.com/termux/termux-api/releases) app installed.
+</div>
 
-### Quick Installation (for Termux):
+___
+
+### Requirements
+
+Python >=3.9
+
+___
+
+### Usage
+
 ```bash
-curl -sS [https://raw.githubusercontent.com/rittik55/ritiktool/main/install.sh](https://raw.githubusercontent.com/rittik55/ritiktool/main/install.sh) | bash
+rittiktool

@@ -4,6 +4,7 @@ from miflash.flash import run_flash_script, select_script, wait_for_device
 from miflash.rom import default_scan_root, extract_rom, find_roms, ARCHIVE_EXTENSIONS
 from miflash.system import console, detect_device
 
+
 def choose_rom(roms):
     if not roms:
         console.print("No ROM found in current directory.", highlight=False)
@@ -12,13 +13,13 @@ def choose_rom(roms):
     for i, rom in enumerate(roms, start=1):
         console.print(f"\n [green]{i}[/green] - {str(rom)}", highlight=False)
 
-    console.print("\n [dim]https://github.com/rittik55/ritiktool[/dim]\n", highlight=False)
-
+    console.print()
     while True:
         choice = console.input("Enter your choice: ").strip()
         if choice.isdigit() and 1 <= int(choice) <= len(roms):
             return roms[int(choice) - 1]
         console.print("Invalid choice!", highlight=False)
+
 
 def main():
     root = default_scan_root()
@@ -36,6 +37,7 @@ def main():
     wait_for_device(fb_obj.bin)
 
     run_flash_script(script, fb_obj.bin)
+
 
 if __name__ == "__main__":
     main()

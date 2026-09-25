@@ -8,7 +8,8 @@ def run_miflash():
     miflash_main()
 
 def show_menu():
-    console.print("\n=== [bold cyan]RittikTool Fastboot Flasher[/bold cyan] ===\n", highlight=False)
+    console.print("\n=== [bold cyan]RittikTool Fastboot Flasher[/bold cyan] ===", highlight=False)
+    console.print("[dim]https://github.com/rittik55/ritiktool[/dim]\n", highlight=False)
     console.print(" [green]1[/green] - Flash Xiaomi ROM (MiFlash)", highlight=False)
     console.print(" [green]2[/green] - Exit\n", highlight=False)
 

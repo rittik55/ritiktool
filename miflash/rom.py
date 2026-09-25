@@ -8,12 +8,13 @@ from pathlib import Path
 from miflash.system import console
 
 ARCHIVE_EXTENSIONS = (".tgz", ".tar.gz", ".tar", ".zip", ".7z")
+SKIP_DIRS = {"Android", ".git", "node_modules", ".cache", "cache"}
 
 
 def default_scan_root() -> Path:
-    termux_storage = Path("/sdcard/Download")
-    if termux_storage.exists():
-        return termux_storage
+    internal_storage = Path("/sdcard")
+    if internal_storage.exists():
+        return internal_storage
     return Path.cwd()
 
 
@@ -22,12 +23,16 @@ def find_roms(root: Path):
     if not root.exists():
         return candidates
 
-    for item in root.iterdir():
-        name = item.name.lower()
-        if item.is_file() and any(name.endswith(ext) for ext in ARCHIVE_EXTENSIONS):
-            candidates.append(item)
-        elif item.is_dir() and (list(item.glob("*.sh")) or list(item.rglob("*.sh"))):
-            candidates.append(item)
+    with console.status("[white]Scanning internal storage for ROM files...[/white]", spinner="dots"):
+        for dirpath, dirnames, filenames in os.walk(str(root), topdown=True, followlinks=False):
+            dirnames[:] = [d for d in dirnames if not d.startswith(".") and d not in SKIP_DIRS]
+
+            p_dir = Path(dirpath)
+
+            for fname in filenames:
+                name_lower = fname.lower()
+                if any(name_lower.endswith(ext) for ext in ARCHIVE_EXTENSIONS):
+                    candidates.append(p_dir / fname)
 
     return sorted(candidates, key=lambda p: p.name)
 
@@ -43,18 +48,19 @@ def extract_rom(archive_path: Path) -> Path:
     else:
         dest_folder_name = archive_path.name
 
-    extract_to = archive_path.parent / dest_folder_name
+    # Download फ़ोल्डर के अंदर hybrid-fastboot-rom डायरेक्टरी
+    base_extract_dir = Path("/sdcard/Download/hybrid-fastboot-rom")
+    extract_to = base_extract_dir / dest_folder_name
     extract_to.mkdir(parents=True, exist_ok=True)
 
-    console.print(f"\n[cyan]Extracting:[/cyan] {archive_path.name}")
+    console.print(f"\n[cyan]Extracting to:[/cyan] [dim]{extract_to}[/dim]")
 
     if name_lower.endswith((".7z", ".zip", ".tgz", ".tar.gz", ".tar")):
-        # 7z terminal par live percentage aur progress bar dikhayega (-bso0 -bsp1)
         res = subprocess.run(
             ["7z", "x", str(archive_path), f"-o{extract_to}", "-y", "-bso0", "-bsp1"]
         )
         if res.returncode != 0:
-            console.print("\n[yellow]Fallback extraction running...[/yellow]")
+            console.print("\n[yellow]Running alternative extractor...[/yellow]")
             subprocess.run(["7z", "x", str(archive_path), f"-o{extract_to}", "-y"])
 
     console.print("[green]✔ Extraction complete![/green]\n")

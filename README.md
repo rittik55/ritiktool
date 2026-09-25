@@ -22,4 +22,5 @@ ___
 ### Usage
 
 ```bash
-rittiktool
+curl -fsSL https://raw.githubusercontent.com/rittik55/ritiktool/main/install.sh | bash
+

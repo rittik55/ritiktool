@@ -7,11 +7,14 @@ from miflash.system import console, detect_device
 
 def choose_rom(roms):
     if not roms:
-        console.print("No ROM found in current directory.", highlight=False)
+        console.print("No ROM found in storage.", highlight=False)
         raise SystemExit(1)
 
     for i, rom in enumerate(roms, start=1):
-        console.print(f"\n [green]{i}[/green] - {str(rom)}", highlight=False)
+        if rom.is_dir():
+            console.print(f"\n [green]{i}[/green] - [bold yellow][Extracted Folder][/bold yellow] {str(rom)}", highlight=False)
+        else:
+            console.print(f"\n [green]{i}[/green] - {str(rom)}", highlight=False)
 
     console.print()
     while True:
@@ -27,8 +30,7 @@ def main():
 
     selected = choose_rom(roms)
 
-    is_archive = any(selected.name.lower().endswith(ext) for ext in ARCHIVE_EXTENSIONS)
-    if selected.is_file() or is_archive:
+    if selected.is_file():
         selected = extract_rom(selected)
 
     script = select_script(selected)
